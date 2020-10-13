@@ -1,175 +1,318 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
+using Microsoft.VisualBasic;
 
 namespace Forms3
 {
     public partial class Form1 : Form
     {
-
-        TreeView tree;
-        Button btn;
-        Label lbl;
-        CheckBox box_lbl, box_btn;
-        RadioButton rb1, rb2;
-        TextBox txt_box;
-
+        private TreeView _tree;
+        private Button _btn;
+        private Label _lbl;
+        private CheckBox _boxLbl, _boxBtn;
+        private RadioButton _r1, _r2;
+        private TextBox _textbox;
+        private PictureBox _pictureBox;
+        private TabControl _tabControl;
+        private ListBox _listbox;
         public Form1()
         {
-            this.Height = 500;
-            this.Width = 600;
-            this.Text = "Vorm elementidega";
-            tree = new TreeView();
-            tree.Dock = DockStyle.Left;
-            tree.AfterSelect += Tree_AfterSelect;
+            Height = 500;
+            Width = 600;
+            Text = "Vorm elementidega";
+            _tree = new TreeView();
+            _tree.Dock = DockStyle.Left;
+
+            _tree.AfterSelect += TreeOnAfterSelect;
+
             TreeNode tn = new TreeNode("Elemendid");
-            //Button
+
             tn.Nodes.Add(new TreeNode("Nupp-Button"));
-            btn = new Button();
-            btn.Text = "Vajuta siia";
-            btn.Location = new Point(200, 100);
-            btn.Height = 40;
-            btn.Width = 120;
-            btn.Click += Btn_Click;
-            //Label
-            tn.Nodes.Add(new TreeNode("Label"));
-            lbl = new Label();
-            lbl.Text = "Tarkvara arendajad";
-            lbl.Size = new Size(150, 30);
-            lbl.Location = new Point(150, 200);
 
-            tn.Nodes.Add(new TreeNode("CheckBox"));
-            tn.Nodes.Add(new TreeNode("Radiobutton"));
-            tn.Nodes.Add(new TreeNode("TextKast"));
-          
+            _btn = new Button();
+            _btn.Text = "Vajuta siia";
+            _btn.Location = new Point(200, 100);
+            _btn.Height = 40;
+            _btn.Width = 120;
+            _btn.Click += BtnOnClick;
+
+            tn.Nodes.Add(new TreeNode("Silt-Label"));
+
+            _lbl = new Label();
+            _lbl.Text = "Tarkvaraarendajad";
+            _lbl.Size = new Size(100, 30);
+            _lbl.Location = new Point(150, 200);
+
+            tn.Nodes.Add(new TreeNode("Märkeruut-Checkbox"));
+
+            _boxBtn = new CheckBox();
+            _boxBtn.Text = "Näita nupp";
+            _boxBtn.Location = new Point(200, 30);
+            _boxBtn.CheckedChanged += Box_btnOnCheckedChanged;
+
+            _boxLbl = new CheckBox();
+            _boxLbl.Text = "Näita silt";
+            _boxLbl.Location = new Point(150, 70);
+            _boxLbl.CheckedChanged += Box_lblOnCheckedChanged;
+            _tree.Nodes.Add(tn);
+            Controls.Add(_tree);
+
+            tn.Nodes.Add(new TreeNode("Radionupp-Radiobutton"));
+
+            tn.Nodes.Add(new TreeNode("Tekstkast-Textbox"));
+
+            tn.Nodes.Add(new TreeNode("PictureBox"));
+
+            tn.Nodes.Add(new TreeNode("Kaart-TabControl"));
+
+            tn.Nodes.Add(new TreeNode("MessageBox"));
+            
+            tn.Nodes.Add(new TreeNode("ListBox"));
+            
+            tn.Nodes.Add(new TreeNode("DataGridView"));
+            
+            tn.Nodes.Add(new TreeNode("Menu"));
 
 
-            tree.Nodes.Add(tn);
-            this.Controls.Add(tree);
         }
 
-        private void Tree_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeOnAfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Text == "Nupp-Button")
             {
-                this.Controls.Add(btn);
+                Controls.Add(_btn);
             }
-            else if (e.Node.Text == "Label")
+            else if (e.Node.Text == "Silt-Label")
             {
-                lbl = new Label();
-                lbl.Text = "Tarkvara arendajad";
-                lbl.Size = new Size(150, 30);
-                lbl.Location = new Point(150, 200);
-                this.Controls.Add(lbl);
+                Controls.Add(_lbl);
             }
-
-            else if (e.Node.Text == "CheckBox")
+            else if (e.Node.Text == "Märkeruut-Checkbox")
             {
-                box_btn = new CheckBox();
-                box_btn.Text = "Naita button";
-                box_btn.Location = new Point(200, 30);
-                this.Controls.Add(box_btn);
-                box_lbl = new CheckBox();
-                box_lbl.Text = "Naita label";
-                box_lbl.Location = new Point(200, 70);
-                this.Controls.Add(box_lbl);
-                box_btn.CheckedChanged += Box_btn_CheckedChanged;
-                box_lbl.CheckedChanged += Box_lbl_CheckedChanged;
+                Controls.Add(_boxBtn);
+                Controls.Add(_boxLbl);
             }
-            else if (e.Node.Text == "Radiobutton")
+            else if (e.Node.Text == "Radionupp-Radiobutton")
             {
-                rb1 = new RadioButton();
-                rb1.Text = "Vasakule-Button";
-                rb1.Location = new Point(320, 30);
-                rb1.CheckedChanged += new EventHandler(RadioButtons_Changed);
-                rb2 = new RadioButton();
-                rb2.Text = "Paremale-Button";
-                rb2.Location = new Point(320, 70);
-                rb2.CheckedChanged += new EventHandler(RadioButtons_Changed);
-
-                this.Controls.Add(rb1);
-                this.Controls.Add(rb2);
+                _r1 = new RadioButton();
+                _r1.Text = "Nupp vasakule";
+                _r1.Location = new Point(320, 30);
+                _r1.CheckedChanged += Radiobuttons_Changed;
+                _r2 = new RadioButton();
+                _r2.Text = "Nupp paremale";
+                _r2.Location = new Point(320, 70);
+                _r2.CheckedChanged += Radiobuttons_Changed;
+                Controls.Add(_r1);
+                Controls.Add(_r2);
             }
-
-            else if (e.Node.Text == "TextKast")
+            else if (e.Node.Text == "Tekstkast-Textbox")
             {
                 string text;
                 try
                 {
                     text = File.ReadAllText("text.txt");
                 }
-                catch (FileNotFoundException excpetion)
+                catch
                 {
-                    text = "Tekst Puudub";
+                    text = "Tekst puudub";
                 }
-                txt_box = new TextBox();
-                txt_box.Multiline = true;
-                txt_box.Text = text;
-                txt_box.Location = new Point(300, 300);
-                txt_box.Width = 200;
-                txt_box.Height = 200;
-                this.Controls.Add(txt_box);
+                _textbox = new TextBox();
+                _textbox.Multiline = true;
+                _textbox.Text = text;
+                _textbox.Location = new Point(300, 300);
+                _textbox.Width = 200;
+                _textbox.Height = 200;
+                Controls.Add(_textbox);
+            }
+            else if (e.Node.Text == "PictureBox")
+            {
+                _pictureBox = new PictureBox();
+                _pictureBox.Image = new Bitmap("image.jpg");
+                _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                _pictureBox.Location = new Point(450, 50);
+                _pictureBox.BorderStyle = BorderStyle.Fixed3D;
+                Controls.Add(_pictureBox);
+            }
+            else if (e.Node.Text == "Kaart-TabControl")
+            {
+                const int MAX_PAGE = 3;
+
+                string selectTabInputBox = Interaction.InputBox("Sisesta mis leht tuleb avada?\nnt: 1, 2, 3", "Vali leht", "1");
+                if (_tabControl == null)
+                {
+                    _tabControl = new TabControl();
+                    _tabControl.Location = new Point(300, 150);
+                    _tabControl.Size = new Size(200, 200);
+                    string[] tabNames = new string[] { "Esimene", "Teine", "Kolmas" };
+                    string[] tabImages = new string[] { "george.png", "peppa.png", "dad.png" };
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        _tabControl.TabPages.Add(new TabPage(tabNames[i]));
+                        Bitmap bitmap = new Bitmap(tabImages[i]);
+                        PictureBox picture = new PictureBox()
+                        {
+                            Image = bitmap,
+                            Size = new Size(80, 140),
+                            SizeMode = PictureBoxSizeMode.Zoom
+                        };
+                        _tabControl.TabPages[i].Controls.Add(picture);
+                    }
+                    Controls.Add(_tabControl);
+                }
+
+                var pagesNumbers = Enumerable.Range(1, MAX_PAGE).Select(x => x.ToString()).ToArray(); // String values 1,2,3 using LINQ
+                if (pagesNumbers.Contains(selectTabInputBox)) // Checks that user's input contains numbers 1, 2, 3
+                {
+                    int receivedTabIndex = Int32.Parse(selectTabInputBox) - 1; // User defines tab to open using ints 1, 2, 3
+                    _tabControl.SelectedIndex = receivedTabIndex; // Opens tab, that defines user
+                }
+            }
+            else if (e.Node.Text == "MessageBox")
+            {
+                MessageBox.Show("Hello, World!",
+                    "MessageBox",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                var showInputBox =
+                    MessageBox.Show("Tahad InputBox näha?", "Aken koos nupudega", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (showInputBox == DialogResult.Yes)
+                {
+                    string textInputBox = Interaction.InputBox("Sisesta siia mingi text", "InputBox", "Mingi text");
+                    if (!_lbl.Text.Contains(textInputBox) && textInputBox != "")
+                    {
+                        if (!Controls.Contains(_lbl))
+                        {
+                            Controls.Add(_lbl);
+                        }
+                        _lbl.Text += textInputBox + "\n";
+                        _lbl.Height += 15;
+                    }
+                }
+            }
+            else if (e.Node.Text == "ListBox")
+            {
+                _listbox = new ListBox();
+                string[] _colors = new string[] { "Sinine", "Kolane", "Roheline", "Punane" };
+
+                foreach (var item in _colors)
+                {
+                    _listbox.Items.Add(item);
+                }
+
+                _listbox.Location = new Point(350, 50);
+                _listbox.Width = 50;
+                _listbox.Height = _colors.Length * 15;
+                Controls.Add(_listbox);
+            }
+            else if (e.Node.Text == "DataGridView")
+            {
+                DataSet dataset = new DataSet("Näide");
+                dataset.ReadXml("example.xml");
+                DataGridView dgv = new DataGridView();
+                dgv.Location = new Point(200, 200);
+                dgv.Width = 300;
+                dgv.Height = 250;
+                dgv.AutoGenerateColumns = true;
+                dgv.DataMember = "note";
+                dgv.DataSource = dataset;
+                Controls.Add(dgv);
+            }
+            else if (e.Node.Text == "Menu")
+            {
+                MainMenu menu = new MainMenu();
+                MenuItem menuItem = new MenuItem("File");
+                menuItem.MenuItems.Add("Exit", new EventHandler(menuItem_Exit));
+                menu.MenuItems.Add(menuItem);
+                MenuItem menuItem2 = new MenuItem("View");
+                menuItem2.MenuItems.Add("Dark Gray", new EventHandler(menuItem_1));
+                menuItem2.MenuItems.Add("Light Gray", new EventHandler(menuItem_2));
+                menuItem2.MenuItems.Add("Yellow, Red", new EventHandler(menuItem_3));
+
+                menu.MenuItems.Add(menuItem2);
+
+                this.Menu = menu;
             }
         }
 
-        private void RadioButtons_Changed(object sender, EventArgs e)
+        private void menuItem_3(object sender, EventArgs e)
         {
-            if (rb1.Checked)
+            _tree.BackColor = Color.Yellow;
+            this.BackColor = Color.Red;
+        }
+
+        private void menuItem_2(object sender, EventArgs e)
+        {
+            _tree.BackColor = Color.LightGray;
+            this.BackColor = Color.LightGray;
+        }
+
+        private void menuItem_1(object sender, EventArgs e)
+        {
+            _tree.BackColor = Color.DarkGray;
+            this.BackColor = Color.DarkGray;
+        }
+
+        private void menuItem_Exit(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Ты уверен что хочешь закрыть?", "Вопрос", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                btn.Location = new Point(150, 100);
-            }
-            else if (rb2.Checked)
-            {
-                btn.Location = new Point(400, 100);
+                this.Dispose();
             }
         }
 
-        private void Box_lbl_CheckedChanged(object sender, EventArgs e)
+        private void Radiobuttons_Changed(object sender, EventArgs e)
         {
-            if (box_lbl.Checked)
+            if (_r2.Checked)
             {
-                this.Controls.Add(lbl);
+                _btn.Location = new Point(350, 100);
             }
             else
             {
-                this.Controls.Remove(lbl);
+                _btn.Location = new Point(200, 100);
             }
         }
 
-        private void Box_btn_CheckedChanged(object sender, EventArgs e)
+        private void Box_lblOnCheckedChanged(object sender, EventArgs e)
         {
-            if (box_btn.Checked)
+            if (_boxLbl.Checked)
             {
-                this.Controls.Add(btn);
+                Controls.Add(_lbl);
             }
             else
             {
-                this.Controls.Remove(btn);
+                Controls.Remove(_lbl);
             }
         }
 
-        private void Btn_Click(object sender, EventArgs e)
+        private void Box_btnOnCheckedChanged(object sender, EventArgs e)
         {
-            if (btn.BackColor == Color.Blue)
+            if (_boxBtn.Checked)
             {
-                btn.BackColor = Color.Red;
-                lbl.BackColor = Color.Green;
-                lbl.ForeColor = Color.White;
+                Controls.Add(_btn);
             }
             else
             {
-                btn.BackColor = Color.Blue;
-                lbl.BackColor = Color.White;
-                lbl.ForeColor = Color.Green;
+                Controls.Remove(_btn);
+            }
+        }
+
+        private void BtnOnClick(object sender, EventArgs e)
+        {
+            if (_btn.BackColor == Color.Blue)
+            {
+                _btn.BackColor = Color.Red;
+                _lbl.BackColor = Color.Green;
+                _lbl.ForeColor = Color.Orange;
+            }
+            else
+            {
+                _btn.BackColor = Color.Blue;
+                _lbl.ForeColor = Color.Green;
+                _lbl.BackColor = Color.Orange;
             }
         }
     }
