@@ -225,17 +225,32 @@ namespace Forms3
             {
                 MainMenu menu = new MainMenu();
                 MenuItem menuItem = new MenuItem("File");
-                menuItem.MenuItems.Add("Exit", new EventHandler(menuItem_Exit));
+                menuItem.MenuItems.Add("Exit", new EventHandler(menuItem_6));
+                menuItem.MenuItems.Add("New Form", new EventHandler(menuItem_5));
                 menu.MenuItems.Add(menuItem);
                 MenuItem menuItem2 = new MenuItem("View");
                 menuItem2.MenuItems.Add("Dark Gray", new EventHandler(menuItem_1));
                 menuItem2.MenuItems.Add("Light Gray", new EventHandler(menuItem_2));
                 menuItem2.MenuItems.Add("Yellow, Red", new EventHandler(menuItem_3));
+                menuItem2.MenuItems.Add("Refresh", new EventHandler(menuItem_4));
 
                 menu.MenuItems.Add(menuItem2);
 
                 this.Menu = menu;
             }
+        }
+
+        private void menuItem_5(object sender, EventArgs e)
+        {
+            Form1 newForm = new Form1();
+            newForm.Show();
+        }
+
+        private void menuItem_4(object sender, EventArgs e)
+        {
+            Controls.Clear();
+            Controls.Add(_tree);
+            BackColor = DefaultBackColor;
         }
 
         private void menuItem_3(object sender, EventArgs e)
@@ -256,7 +271,7 @@ namespace Forms3
             this.BackColor = Color.DarkGray;
         }
 
-        private void menuItem_Exit(object sender, EventArgs e)
+        private void menuItem_6(object sender, EventArgs e)
         {
             if(MessageBox.Show("Ты уверен что хочешь закрыть?", "Вопрос", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
