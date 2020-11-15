@@ -139,13 +139,14 @@ namespace Forms3
             else if (e.Node.Text == "Kaart-TabControl")
             {
                 const int MAX_PAGE = 3;
-
                 string selectTabInputBox = Interaction.InputBox("Sisesta mis leht tuleb avada?\nnt: 1, 2, 3", "Vali leht", "1");
                 if (_tabControl == null)
                 {
-                    _tabControl = new TabControl();
-                    _tabControl.Location = new Point(300, 150);
-                    _tabControl.Size = new Size(200, 200);
+                    _tabControl = new TabControl
+                    {
+                        Location = new Point(300, 150),
+                        Size = new Size(200, 150)
+                    };
                     string[] tabNames = new string[] { "Esimene", "Teine", "Kolmas" };
                     string[] tabImages = new string[] { "george.png", "peppa.png", "dad.png" };
 
@@ -162,13 +163,6 @@ namespace Forms3
                         _tabControl.TabPages[i].Controls.Add(picture);
                     }
                     Controls.Add(_tabControl);
-                }
-
-                var pagesNumbers = Enumerable.Range(1, MAX_PAGE).Select(x => x.ToString()).ToArray(); // String values 1,2,3 using LINQ
-                if (pagesNumbers.Contains(selectTabInputBox)) // Checks that user's input contains numbers 1, 2, 3
-                {
-                    int receivedTabIndex = Int32.Parse(selectTabInputBox) - 1; // User defines tab to open using ints 1, 2, 3
-                    _tabControl.SelectedIndex = receivedTabIndex; // Opens tab, that defines user
                 }
             }
             else if (e.Node.Text == "MessageBox")
@@ -210,16 +204,18 @@ namespace Forms3
             }
             else if (e.Node.Text == "DataGridView")
             {
-                DataSet dataset = new DataSet("Näide");
-                dataset.ReadXml("example.xml");
-                DataGridView dgv = new DataGridView();
-                dgv.Location = new Point(200, 200);
-                dgv.Width = 300;
-                dgv.Height = 250;
-                dgv.AutoGenerateColumns = true;
-                dgv.DataMember = "note";
-                dgv.DataSource = dataset;
-                Controls.Add(dgv);
+                DataSet dataSet = new DataSet("Näide");
+                dataSet.ReadXml("example.xml");
+                DataGridView _dataGridView = new DataGridView
+                {
+                    DataSource = dataSet,
+                    AutoGenerateColumns = true,
+                    DataMember = "email",
+                    Location = new Point(150, 300),
+                    Height = 140,
+                    Width = 250
+                };
+                Controls.Add(_dataGridView);
             }
             else if (e.Node.Text == "Menu")
             {
