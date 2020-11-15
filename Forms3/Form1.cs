@@ -148,7 +148,7 @@ namespace Forms3
                         Size = new Size(200, 150)
                     };
                     string[] tabNames = new string[] { "Esimene", "Teine", "Kolmas" };
-                    string[] tabImages = new string[] { "george.png", "peppa.png", "dad.png" };
+                    string[] tabImages = new string[] { "..//..//files//george.png", "..//..//files//peppa.png", "..//..//files//dad.png" };
 
                     for (int i = 0; i < 3; i++)
                     {
@@ -205,7 +205,7 @@ namespace Forms3
             else if (e.Node.Text == "DataGridView")
             {
                 DataSet dataSet = new DataSet("Näide");
-                dataSet.ReadXml("example.xml");
+                dataSet.ReadXml("..//..//files//example.xml");
                 DataGridView _dataGridView = new DataGridView
                 {
                     DataSource = dataSet,

@@ -79,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="example.xml" />
+    <Content Include="files\dad.png" />
+    <Content Include="files\example.xml" />
+    <Content Include="files\george.png" />
+    <Content Include="files\image.jpg" />
+    <Content Include="files\peppa.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
